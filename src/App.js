@@ -11,6 +11,7 @@ import Restaurant from './pages/Restaurant';
 import NGO from './pages/NGO';
 import Registration from './pages/Registration';
 import Contact from './pages/Contact';
+import RestaurantDashboard from './pages/RestaurantDashboard';
 import './App.css';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
             <Route path="/ngo" element={<NGO />} />
             <Route path="/registration" element={<Registration />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/restaurant-dashboard" element={<RestaurantDashboard />} />
           </Routes>
         </main>
         <Footer />
