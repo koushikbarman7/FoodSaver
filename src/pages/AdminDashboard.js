@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Bar, Pie } from 'react-chartjs-2';
+import "../css/AdminDashboard.css";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement } from 'chart.js';
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
@@ -15,23 +16,41 @@ const AdminDashboard = () => {
     fetchData();
   }, []);
 
-  const fetchData = async () => {
-    try {
-      const [statsRes, pendingRes, logsRes] = await Promise.all([
-        fetch('/api/admin/stats'),
-        fetch('/api/admin/pending'),
-        fetch('/api/admin/logs?limit=10')
-      ]);
-      setStats(await statsRes.json());
-      setPendingOrgs(await pendingRes.json());
-      setDonationLogs(await logsRes.json());
-      setLoading(false);
-    } catch (err) {
-      console.error('Failed to load admin data');
-    }
+  const fetchData = () => {
+    // MOCK DATA (temporary)
+    setStats({
+      totalOrgs: 20,
+      totalKg: 1200,
+      meals: 3200,
+      activePartnerships: 14,
+    });
+
+    setPendingOrgs([
+      {
+        _id: "1",
+        organizationName: "Test Restaurant",
+        organizationType: "restaurant",
+        contactPerson: "John Doe",
+        email: "john@test.com",
+        status: "pending",
+      }
+    ]);
+
+    setDonationLogs([
+      {
+        _id: "log1",
+        date: "2025-11-10T14:30:00Z",
+        restaurantName: "Test Restaurant",
+        ngoName: "Hope NGO",
+        weightKg: 12,
+        status: "completed"
+      }
+    ]);
+
+    setLoading(false);
   };
 
-  // 📊 Mock chart data (replace with API)
+  // 📊 Mock chart data
   const impactData = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
     datasets: [{
@@ -60,33 +79,79 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard">
-      {/* 🔔 Top Bar */}
+      {/* 🔔 Top Header */}
       <header className="admin-header">
-        <h1>FoodSaver Admin</h1>
-        <div className="notifications">
+        <div className="header-left">
+          <h1>FoodSaver Admin</h1>
           {pendingOrgs.length > 0 && (
             <span className="badge">{pendingOrgs.length} pending</span>
           )}
         </div>
+        <nav className="header-nav">
+          <button className="btn-export">📥 Export NGO Sheet</button>
+          <button className="btn-export">📥 Export Restaurant Sheet</button>
+          <button className="btn-primary">+ Add Manual Donation</button>
+        </nav>
       </header>
 
-      {/* 📊 Stats Cards */}
-      <div className="stats-grid">
-        <StatCard title="Total Organizations" value={stats.totalOrgs || 86} icon="🏢" />
-        <StatCard title="Food Saved" value={`${(stats.totalKg || 28500).toLocaleString()} kg`} icon="♻️" />
-        <StatCard title="Meals Distributed" value={`${(stats.meals || 71250).toLocaleString()}`} icon="🍲" />
-        <StatCard title="Active Partnerships" value={stats.activePartnerships || 34} icon="🤝" />
+      {/* 📊 Stats Cards Row */}
+      <div className="stats-row">
+        <StatCard
+          title="Total Organizations"
+          value={stats.totalOrgs || 0}
+          icon="🏢"
+          color="#38e07b"
+        />
+        <StatCard
+          title="Food Saved"
+          value={`${(stats.totalKg || 0).toLocaleString()} kg`}
+          icon="♻️"
+          color="#51946c"
+        />
+        <StatCard
+          title="Meals Distributed"
+          value={`${(stats.meals || 0).toLocaleString()}`}
+          icon="🍲"
+          color="#94e0b2"
+        />
+        <StatCard
+          title="Active Partnerships"
+          value={stats.activePartnerships || 0}
+          icon="🤝"
+          color="#7bcc9b"
+        />
       </div>
 
-      {/* 📈 Charts Row */}
-      <div className="charts-row">
+      {/* 📈 Charts Section */}
+      <div className="charts-section">
         <div className="chart-card">
           <h3>Monthly Impact</h3>
-          <Bar data={impactData} options={{ responsive: true, plugins: { legend: { display: false } } }} />
+          <Bar
+            data={impactData}
+            options={{
+              responsive: true,
+              plugins: {
+                legend: { display: false },
+                tooltip: { callbacks: { label: (ctx) => `${ctx.raw} kg` } }
+              },
+              scales: {
+                y: { beginAtZero: true }
+              }
+            }}
+          />
         </div>
         <div className="chart-card">
           <h3>Org Type Distribution</h3>
-          <Pie data={orgTypeData} options={{ responsive: true }} />
+          <Pie
+            data={orgTypeData}
+            options={{
+              responsive: true,
+              plugins: {
+                legend: { position: 'bottom' },
+                tooltip: { callbacks: { label: (ctx) => `${ctx.label}: ${ctx.raw}` } }
+              }
+            }}
+          />
         </div>
       </div>
 
@@ -94,18 +159,20 @@ const AdminDashboard = () => {
       <section className="pending-section">
         <h2>🆕 Pending Approvals ({pendingOrgs.length})</h2>
         {pendingOrgs.length === 0 ? (
-          <p className="no-pending">✅ All organizations approved!</p>
+          <div className="empty-state">
+            ✅ All organizations approved!
+          </div>
         ) : (
           <div className="pending-list">
             {pendingOrgs.map(org => (
               <div key={org._id} className="pending-item">
-                <div>
+                <div className="org-info">
                   <strong>{org.organizationName}</strong> • {org.organizationType}
                   <br />
                   <small>{org.contactPerson} • {org.email}</small>
                 </div>
-                <div>
-                  <button 
+                <div className="org-actions">
+                  <button
                     className="btn-approve"
                     onClick={() => handleApprove(org._id)}
                   >
@@ -122,48 +189,45 @@ const AdminDashboard = () => {
       {/* 📦 Recent Activity */}
       <section className="logs-section">
         <h2>📦 Recent Donations</h2>
-        <table className="logs-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Restaurant</th>
-              <th>NGO</th>
-              <th>Food (kg)</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {donationLogs.map(log => (
-              <tr key={log._id}>
-                <td>{new Date(log.date).toLocaleDateString()}</td>
-                <td>{log.restaurantName}</td>
-                <td>{log.ngoName}</td>
-                <td>{log.weightKg} kg</td>
-                <td>
-                  <span className={`status-badge status-${log.status}`}>
-                    {log.status}
-                  </span>
-                </td>
+        <div className="logs-table-wrapper">
+          <table className="logs-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Restaurant</th>
+                <th>NGO</th>
+                <th>Food (kg)</th>
+                <th>Status</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {donationLogs.map(log => (
+                <tr key={log._id}>
+                  <td>{new Date(log.date).toLocaleDateString()}</td>
+                  <td>{log.restaurantName}</td>
+                  <td>{log.ngoName}</td>
+                  <td>{log.weightKg} kg</td>
+                  <td>
+                    <span className={`status-badge status-${log.status}`}>
+                      {log.status}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </section>
-
-      {/* 📥 Export & Actions */}
-      <div className="admin-actions">
-        <button className="btn-export">📥 Export NGO Sheet (CSV)</button>
-        <button className="btn-export">📥 Export Restaurant Sheet (CSV)</button>
-        <button className="btn-primary">+ Add Manual Donation</button>
-      </div>
     </div>
   );
 };
 
 // 🔲 Reusable Stat Card
-const StatCard = ({ title, value, icon }) => (
-  <div className="stat-card">
-    <div className="stat-icon">{icon}</div>
+const StatCard = ({ title, value, icon, color }) => (
+  <div className="stat-card" style={{ background: `linear-gradient(135deg, ${color}20, ${color}10)` }}>
+    <div className="stat-icon" style={{ background: color, color: 'white' }}>
+      {icon}
+    </div>
     <div>
       <div className="stat-value">{value}</div>
       <div className="stat-title">{title}</div>
