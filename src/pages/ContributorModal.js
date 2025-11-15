@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 // Define your repository details here
-const REPO_OWNER = 'abhishekkumar177';
+const REPO_OWNER = 'bidyut26maji';
 const REPO_NAME = 'FoodSaver';
 
 const ContributorModal = ({ contributor, onClose }) => {
@@ -15,7 +15,7 @@ const ContributorModal = ({ contributor, onClose }) => {
       setIsLoading(true);
       try {
         // Fetch all commits by this specific user
-        const response = await fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/commits?author=${contributor.name}`);
+        const response = await fetch(`https://api.github.com/repos/bidyut26maji/FoodSaver/commits?author=${contributor.name}`);
         const commits = await response.json();
 
         let totalAdditions = 0;
