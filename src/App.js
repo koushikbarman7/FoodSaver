@@ -17,6 +17,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import Contributors from './pages/Contributors';
 import Contribute from './pages/Contribute';
 import Support from './pages/Support';
+import Team from './pages/Team';
 import './App.css';
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
             <Route path="/contributors" element={<Contributors />} />
             <Route path="/contribute" element={<Contribute />} />
             <Route path="/support" element={<Support />} />
+            <Route path="/team" element={<Team />} />
           </Routes>
         </main>
         <Footer />
