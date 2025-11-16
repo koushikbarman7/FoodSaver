@@ -122,89 +122,116 @@ const About = () => {
         </motion.div>
 
         {/* Hero Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          style={{
-            position: 'relative',
-            minHeight: '550px',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '80px 20px',
-            marginBottom: '80px',
-            borderRadius: '24px',
-            overflow: 'hidden'
-          }}
-        >
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            backgroundImage: 'url("https://lh3.googleusercontent.com/aida-public/AB6AXuDoOjLf8VnF1NT9GuPF5AGkSyRUAIw20tDdqk1RFxnr2RzgXp2TpN-wKaU5ygC58g5edm4YDe-UOufRZ1HipR5fmPj3s4Tmv84ZHNCOB6W0oZHgqkrrrYB6bFtQ1WYsbpHABdbG_zmouH1x4jRiu8Ywg5QS2vhJjrpn8dydV_pCJuhzFaeoj_ArsoyLYU60vrPYnxP1mK78I-i2cS3R6SqBTulRsceTqNK8-KiQHwNqq_eiBCojcusYw5DN9wfLrAxiAysVTrZL450")',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            filter: 'brightness(0.3)'
-          }} />
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.2), transparent 70%)'
-          }} />
+<motion.div
+  initial={{ opacity: 0, y: 30 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8 }}
+  style={{
+    position: "relative",
+    minHeight: "550px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "80px 20px",
+    marginBottom: "80px",
+    borderRadius: "24px",
+    overflow: "hidden",
+  }}
+>
+  
+  <div
+    style={{
+      position: "absolute",
+      inset: 0,
+      backgroundImage:
+        'url("https://as2.ftcdn.net/v2/jpg/05/66/58/01/1000_F_566580177_ALbzbUyyM72O9PUyJI7N6J2ZTKwaGqBl.jpg")',
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      filter: "brightness(0.35)",
+      zIndex: 0,
+    }}
+  />
 
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            style={{ position: 'relative', textAlign: 'center', zIndex: 1, maxWidth: '900px' }}
-          >
-            <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 3, repeat: Infinity }}
-              style={{ fontSize: '4rem', marginBottom: '24px' }}
-            >
-              🌟
-            </motion.div>
-            <h1 style={{
-              fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
-              fontWeight: '900',
-              marginBottom: '24px',
-              background: 'linear-gradient(to right, #10b981, #06b6d4, #8b5cf6)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              lineHeight: 1.2
-            }}>
-              About FoodShare Connect
-            </h1>
-            <p style={{
-              fontSize: '1.25rem',
-              color: 'rgba(255, 255, 255, 0.8)',
-              marginBottom: '32px',
-              lineHeight: '1.8'
-            }}>
-              Connecting restaurants with NGOs to reduce food waste and feed communities
-            </p>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              style={{
-                padding: '16px 32px',
-                background: 'linear-gradient(135deg, #10b981, #059669)',
-                color: 'white',
-                fontWeight: '700',
-                fontSize: '1.1rem',
-                borderRadius: '50px',
-                border: 'none',
-                cursor: 'pointer',
-                boxShadow: '0 10px 40px rgba(16, 185, 129, 0.4)'
-              }}
-            >
-              Learn How It Works
-            </motion.button>
-          </motion.div>
-        </motion.div>
+  {/* Green Glow Overlay */}
+  <div
+    style={{
+      position: "absolute",
+      inset: 0,
+      background:
+        "radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.25), transparent 70%)",
+      zIndex: 0,
+    }}
+  />
+
+  {/* Hero Content */}
+  <motion.div
+    initial={{ scale: 0.9, opacity: 0 }}
+    animate={{ scale: 1, opacity: 1 }}
+    transition={{ delay: 0.2, duration: 0.8 }}
+    style={{
+      position: "relative",
+      textAlign: "center",
+      zIndex: 1,
+      maxWidth: "900px",
+    }}
+  >
+    <motion.div
+      animate={{ y: [0, -10, 0] }}
+      transition={{ duration: 3, repeat: Infinity }}
+      style={{ fontSize: "4rem", marginBottom: "24px" }}
+    >
+      🌟
+    </motion.div>
+
+    <h1
+      style={{
+        fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
+        fontWeight: "900",
+        marginBottom: "24px",
+        background: "linear-gradient(to right, #10b981, #06b6d4, #8b5cf6)",
+        WebkitBackgroundClip: "text",
+        WebkitTextFillColor: "transparent",
+        backgroundClip: "text",
+        lineHeight: 1.2,
+      }}
+    >
+      About FoodShare Connect
+    </h1>
+
+    <p
+      style={{
+        fontSize: "1.25rem",
+        color: "rgba(255, 255, 255, 0.85)",
+        marginBottom: "32px",
+        lineHeight: "1.8",
+      }}
+    >
+      Connecting restaurants with NGOs to reduce food waste and feed
+      communities
+    </p>
+
+    <motion.button
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      style={{
+        padding: "16px 32px",
+        background: "linear-gradient(135deg, #10b981, #059669)",
+        color: "white",
+        fontWeight: "700",
+        fontSize: "1.1rem",
+        borderRadius: "50px",
+        border: "none",
+        cursor: "pointer",
+        boxShadow: "0 10px 40px rgba(16, 185, 129, 0.4)",
+      }}
+    >
+      Learn How It Works
+    </motion.button>
+  </motion.div>
+</motion.div>
+
 
         {/* Stats Section */}
         <motion.div
