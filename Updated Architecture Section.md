@@ -1,9 +1,6 @@
 # Web Application Architecture
 
-<figure>
-  <img src="./architecture-diagram%20github.png" alt="Web Application Architecture diagram" style="max-width:100%;height:auto;">
-  <figcaption><strong>Figure:</strong> Web Application Architecture — Frontend, Backend, APIs/Routes, and Database/Storage.</figcaption>
-</figure>
+<img width="1536" height="1024" alt="architecture-diagram github" src="https://github.com/user-attachments/assets/5c2244c5-b57f-4557-8962-1be0c52031d4" />
 
 ## Architecture Overview
 
